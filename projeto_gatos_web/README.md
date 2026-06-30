@@ -39,4 +39,3 @@ App web simples com TypeScript no frontend e Python no backend.
 
 O app não treina modelo. Ele usa CLIP pré-treinado para comparar a imagem com textos.
 
-Para deploy publico, veja `DEPLOY.md`.
