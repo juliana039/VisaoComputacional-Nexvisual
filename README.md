@@ -1,205 +1,71 @@
-# VisaoComputacional-Nexvisual
+# Classificador de Gatos Web
 
-Repositório com laboratórios de visão computacional, desafios práticos e um projeto final simples usando modelo multimodal pré-treinado.
+App web com TypeScript (compilado) no frontend e Python no backend.
 
-O destaque do repositório é o **Classificador de Gatos por Cor**, um projeto que recebe uma imagem, usa o modelo **CLIP** em modo zero-shot e tenta identificar visualmente o tipo/cor do gato. O sistema também mostra um meme correspondente ao resultado.
+A classificação usa o modelo pré-treinado **CLIP** (`ViT-B/32`) rodando
+localmente no servidor — não há chamada a nenhuma API externa de IA.
 
-## Projeto principal
+## Estrutura esperada do projeto
 
-### Classificador de Gatos por Cor
-
-O projeto classifica imagens em categorias como:
-
-- gato laranja
-- gato preto
-- gato frajola
-- gato malhado
-- gato cinza
-- gato branco
-- gato siamês
-- gato tricolor
-
-Ele também tenta detectar quando a imagem enviada **não parece ser um gato**, retornando a mensagem:
-
-```text
-Oops! Isso não é gato!
 ```
-
-## Como funciona
-
-O projeto **não treina um modelo do zero**.
-
-Ele reutiliza o **CLIP**, um modelo pré-treinado que entende imagens e textos no mesmo espaço de comparação. A imagem enviada é comparada com frases fixas, por exemplo:
-
-```text
-a photo of an orange cat
-a photo of a black cat
-a photo of a striped tabby cat
-a photo of a siamese cat
-```
-
-A frase mais parecida com a imagem vira o resultado final. Por isso esse projeto é um exemplo de:
-
-- visão computacional
-- modelo multimodal
-- classificação zero-shot
-- reutilização de modelo pré-treinado
-
-## Estrutura do repositório
-
-```text
 .
-├── projeto_gatos_clip/
-│   ├── classificador_gatos_clip.ipynb
-│   ├── gatos aleatorios/
-│   ├── memes/
-│   └── requirements.txt
-│
-├── projeto_gatos_web/
-│   ├── public/
-│   ├── src/
-│   ├── server.py
-│   ├── requirements.txt
-│   ├── package.json
-│   └── DEPLOY.md
-│
-└── projetos_aulas/
-    └── laboratórios e desafios do curso
+├── Dockerfile
+├── requirements.txt
+├── server.py
+└── public/
+    ├── index.html
+    ├── styles.css
+    ├── app.js
+    ├── gatos/
+    │   ├── 1.jpeg
+    │   ├── 2.jpg
+    │   ├── 3.png
+    │   ├── 4.jpg
+    │   ├── 5.png
+    │   └── 6.png
+    └── memes/
+        ├── laranja.(png|jpg|jpeg)
+        ├── preto.(png|jpg|jpeg)
+        ├── frajola.(png|jpg|jpeg)
+        ├── malhado.(png|jpg|jpeg)
+        ├── cinza.(png|jpg|jpeg)
+        ├── branco.(png|jpg|jpeg)
+        ├── siames.(png|jpg|jpeg)
+        └── tricolor.(png|jpg|jpeg)
 ```
 
-## Versão notebook
+O `server.py` serve tudo dentro de `public/` como arquivos estáticos e expõe
+o endpoint `POST /api/classify`.
 
-A versão em notebook está em:
-
-```text
-projeto_gatos_clip/classificador_gatos_clip.ipynb
-```
-
-Para instalar as dependências:
-
-```bash
-cd projeto_gatos_clip
-pip install -r requirements.txt
-```
-
-Depois, abra o notebook e rode as células em ordem.
-
-## Versão web
-
-A versão web está em:
-
-```text
-projeto_gatos_web/
-```
-
-Ela tem:
-
-- frontend simples em TypeScript
-- backend em Python
-- upload de imagem
-- botões com imagens prontas
-- preview da imagem
-- resultado com ranking de confiança
-- meme correspondente à categoria
-
-### Rodar localmente
-
-Entre na pasta do projeto web:
-
-```bash
-cd projeto_gatos_web
-```
-
-Instale as dependências Python:
+## Como rodar localmente
 
 ```bash
 pip install -r requirements.txt
+python server.py
 ```
 
-Compile o TypeScript:
+Abra `http://127.0.0.1:8000` (ou a porta definida na variável `PORT`).
 
-```bash
-npm run build
-```
+## Como rodar na Render
 
-Inicie o servidor:
+1. Suba este projeto para um repositório no GitHub.
+2. Em [dashboard.render.com](https://dashboard.render.com), clique em **New → Web Service**.
+3. Conecte sua conta do GitHub e selecione o repositório.
+4. A Render detecta o `Dockerfile` na raiz automaticamente. Escolha o
+   **Instance Type: Free** e clique em criar.
+5. O build baixa os pesos do CLIP (~350MB) durante a etapa de build, então a
+   primeira build demora alguns minutos.
+6. Pronto — o app fica disponível em `https://SEU-SERVICO.onrender.com`.
+   A cada `git push` para a branch principal, a Render builda e publica
+   automaticamente de novo.
 
-```bash
-python3 server.py
-```
-
-Abra no navegador:
-
-```text
-http://localhost:8000
-```
-
-## Como testar
-
-Na versão web:
-
-1. Clique em **Escolher imagem** para enviar uma foto do computador.
-2. Ou use os botões **Gato 1** a **Gato 6**.
-3. Clique em **Analisar gato**.
-4. Veja a categoria escolhida, o ranking e o meme.
-
-Testes interessantes:
-
-- foto clara de gato laranja
-- foto de gato preto
-- foto de gato preto e branco/frajola
-- foto de gato malhado
-- imagem que não seja gato
-- foto com fundo colorido, para observar possíveis confusões do modelo
-
-## Deploy: dá para colocar na Vercel?
-
-Parcialmente.
-
-A **Vercel funciona muito bem para frontend**, mas este projeto completo também tem um backend Python que carrega **CLIP + PyTorch**, que são dependências pesadas. Por isso, subir tudo diretamente na Vercel não é o caminho mais simples.
-
-### Melhor opção para apresentação
-
-Para apresentar hoje, o caminho mais seguro é:
-
-```bash
-cd projeto_gatos_web
-python3 server.py
-```
-
-E mostrar em:
-
-```text
-http://localhost:8000
-```
-
-### Melhor opção para link público
-
-Para um link público funcional, o ideal é hospedar o backend em um serviço que aceite Python com modelo pesado, como:
-
-- Hugging Face Spaces
-- Render
-- Railway
-
-Depois disso, a Vercel pode hospedar apenas o frontend, apontando para a URL do backend.
-
-Mais detalhes estão em:
-
-```text
-projeto_gatos_web/DEPLOY.md
-```
-
-## Tecnologias usadas
-
-- Python
-- PyTorch
-- CLIP
-- Pillow
-- TypeScript
-- HTML
-- CSS
-- Jupyter Notebook
+**Atenção:** o plano gratuito da Render tem só 512MB de RAM, o que é
+apertado para PyTorch + CLIP. Se o serviço cair com erro de memória nos
+logs, considere o plano pago Starter (512MB→mais folga real) ou trocar
+para um modelo CLIP mais leve.
 
 ## Observação
 
-O classificador pode errar algumas imagens. Isso é esperado porque ele não foi treinado especificamente para este conjunto de gatos. A proposta do projeto é demonstrar como um modelo pré-treinado pode ser reutilizado rapidamente para resolver uma tarefa visual de forma simples e apresentável.
+O app não treina modelo nenhum. Ele usa CLIP pré-treinado para comparar a
+imagem enviada com frases descritivas em inglês (ex: `a photo of an orange cat`)
+e escolhe a categoria mais parecida.
