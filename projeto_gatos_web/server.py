@@ -3,6 +3,7 @@ from __future__ import annotations
 import io
 import json
 import mimetypes
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -14,8 +15,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent
 PUBLIC_DIR = ROOT / "public"
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = os.environ.get("HOST", "127.0.0.1")
+PORT = int(os.environ.get("PORT", "8000"))
 
 CAT_THRESHOLD = 0.42
 
