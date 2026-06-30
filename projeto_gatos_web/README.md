@@ -4,6 +4,12 @@ App web simples com TypeScript no frontend e Python no backend.
 
 ## Como rodar
 
+0. Instale as dependências Python:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
 1. Compile o TypeScript:
 
    ```bash
