@@ -1,0 +1,11 @@
+# PyTorch (CPU) — a imagem do Space não tem GPU, então a versão CPU já é suficiente
+# e bem mais leve para build/download
+torch==2.3.1+cpu
+torchvision==0.18.1+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Pacote oficial do CLIP (OpenAI)
+git+https://github.com/openai/CLIP.git
+
+# Demais dependências usadas pelo server.py
+Pillow==10.4.0
