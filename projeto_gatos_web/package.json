@@ -1,0 +1,10 @@
+{
+  "name": "classificador-gatos-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build-ts.mjs --watch",
+    "build": "node scripts/build-ts.mjs"
+  }
+}
