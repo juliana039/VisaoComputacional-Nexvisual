@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classificador de Gatos</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <div class="toolbar">
+          <div>
+            <p class="eyebrow">Visão computacional com CLIP</p>
+            <h1>Classificador de gatos</h1>
+          </div>
+        </div>
+
+        <section class="primary-upload" aria-label="Escolher imagem principal">
+          <label class="upload-button">
+            Escolher imagem
+            <input id="uploadInput" type="file" accept="image/*" />
+          </label>
+        </section>
+
+        <section class="preset-section" aria-label="Imagens prontas">
+          <div class="or-divider" aria-hidden="true">
+            <span></span>
+            <strong>OU</strong>
+            <span></span>
+          </div>
+          <span class="section-label">Testar com imagem pronta</span>
+          <div id="presetButtons" class="preset-buttons"></div>
+        </section>
+
+        <section class="preview-grid">
+          <div class="preview-panel">
+            <div class="panel-header">
+              <span>Imagem de entrada</span>
+              <strong id="selectedName">Nenhuma imagem escolhida</strong>
+            </div>
+            <div class="image-frame">
+              <img id="previewImage" alt="Imagem escolhida para análise" />
+              <span id="emptyPreview">Escolha uma imagem ou clique em um gato pronto.</span>
+            </div>
+          </div>
+
+          <div class="result-panel">
+            <div class="panel-header">
+              <span>Resultado</span>
+              <strong id="statusText">Aguardando análise</strong>
+            </div>
+            <div id="resultContent" class="result-content idle">
+              <p>Depois de escolher a imagem, clique em analisar.</p>
+            </div>
+          </div>
+        </section>
+
+        <button id="analyzeButton" class="analyze-button" disabled>Analisar gato</button>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
